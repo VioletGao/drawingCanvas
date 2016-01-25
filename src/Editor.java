@@ -134,7 +134,7 @@ public class Editor extends JApplet {
    */
   private class RectButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
-      //cmd = new RectCmd();   
+      cmd = new RectCmd();   
       repaint();
     }
   }
@@ -154,7 +154,7 @@ public class Editor extends JApplet {
    */
   private class LineButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
-      // YOU FILL THIS IN.
+      cmd = new SegmentCmd();
       repaint();
     }
   }

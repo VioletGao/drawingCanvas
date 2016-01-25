@@ -17,6 +17,7 @@ public class Drawing {
 	 */
 	public Drawing(Color dColor) {
 		defaultColor = dColor;
+		allShape = new ArrayList<Shape>();
 	}
 	
 	/**
@@ -25,10 +26,8 @@ public class Drawing {
 	 * @param page the Graphics object to draw on
 	 */
 	public void draw(Graphics page) {
-		if (!allShape.isEmpty()) {
-			for (Shape eachShape : allShape) {
-				eachShape.draw(page);
-			}
+		for (Shape theShape: allShape) {
+			theShape.drawShape(page);
 		}
 	}
 	
@@ -59,4 +58,6 @@ public class Drawing {
 	public Color getColor() {
 		return defaultColor;
 	}
+	
+
 }

@@ -8,10 +8,10 @@ import java.awt.*;
  * @see Shape
  */
 public class Rect extends Shape{
-	private int x; // x position of the first corner
-	private int y; // y position of the first corner
-	private int width = 50;
-	private int height = 30;
+	private int x; // x position of the top left corner
+	private int y; // y position of the top left corner
+	private int width;
+	private int height;
 	
 	/**
 	 * Create a Rectangle, setting its color. 
@@ -23,6 +23,7 @@ public class Rect extends Shape{
 	}
 
 	/**
+	 * Draw the rectangle based on the position of first corner and size
 	 * 
 	 * @param page
 	 */
@@ -47,4 +48,27 @@ public class Rect extends Shape{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	/**
+	 * Get the position where the rectangle starts to be drew
+	 * 
+	 * @param p the position of the start point
+	 */
+	public void getStartPoint(Point p) {
+		x = p.x;
+		y = p.y;
+	}
+	
+	/**
+	 * Get the new position of mouse during drawing,
+	 * update the form of the rectangle 
+	 * 
+	 * @param p the position of the end point
+	 */
+	public void updatePos(Point p) {
+		width = p.x - x;
+		height = p.y - y;
+	}
+
+
 }

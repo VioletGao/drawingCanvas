@@ -11,8 +11,70 @@ import java.awt.*;
  */
 public class Segment extends Shape {
   // YOU FILL IN INSTANCE VARIABLES AND METHODS.
+  private int x1; // x position of the start point
+  private int y1; // y position of the start point
+  private int x2; // x position of the end point
+  private int y2; // y position of the end point
 
-  // Helper method that returns true if Point p is within a tolerance of a
+  /**
+   * Create a line, setting its color
+   * @param c the color you wish the shape to initially have
+   */
+  public Segment(Color c) {
+		super(c);
+	}
+  
+  /**
+   * Draw the line
+   * @param page the page you wish to draw the shape on
+   */
+  public void drawShape(Graphics page) {
+  	page.drawLine(x1, y1, x2, y2);
+  	
+  }
+
+  @Override
+  public boolean containsPoint(Point p) {
+  	// TODO Auto-generated method stub
+  	return false;
+  }
+
+  @Override
+  public void move(int deltaX, int deltaY) {
+  	// TODO Auto-generated method stub
+  	
+  }
+
+  @Override
+  public Point getCenter() {
+  	// TODO Auto-generated method stub
+  	return null;
+  }
+  
+  /**
+   * Get the position where the rectangle starts to be drew
+   * 
+   * @param p the position of the start point
+   */
+  public void getStartPoint(Point p) {
+	 x1 = p.x;
+	 y1 = p.y;
+	 x2 = p.x;
+	 y2 = p.y;
+  }
+  
+  /**
+   * Get the new position of mouse during drawing
+   * update the drawing of the line
+   * 
+   * @param p the position of the end point
+   */
+  public void updatePos(Point p) {
+	x2 = p.x;
+	y2 = p.y;
+  }
+  
+// Helper method that returns true if Point p is within a tolerance of a
   // given bounding box. Here, the bounding box is given by the coordinates of
   // its left, top, right, and bottom.
   private static boolean almostContainsPoint(Point p, int left, int top,
@@ -50,4 +112,6 @@ public class Segment extends Shape {
       return Math.sqrt(Math.pow(p.x - x, 2) + Math.pow(p.y - y, 2));
     }
   }
+
+
 }

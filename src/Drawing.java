@@ -25,8 +25,10 @@ public class Drawing {
 	 * @param page the Graphics object to draw on
 	 */
 	public void draw(Graphics page) {
-		for (Shape eachShape : allShape) {
-			eachShape.draw(page);
+		if (!allShape.isEmpty()) {
+			for (Shape eachShape : allShape) {
+				eachShape.draw(page);
+			}
 		}
 	}
 	
@@ -48,5 +50,13 @@ public class Drawing {
 	 */
 	public void addShape(Shape newShape) {
 		allShape.add(0, newShape);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Color getColor() {
+		return defaultColor;
 	}
 }

@@ -8,6 +8,10 @@ import java.awt.*;
  * @see Shape
  */
 public class Rect extends Shape{
+	private int x; // x position of the first corner
+	private int y; // y position of the first corner
+	private int width = 50;
+	private int height = 30;
 	
 	/**
 	 * Create a Rectangle, setting its color. 
@@ -18,14 +22,12 @@ public class Rect extends Shape{
 		super(c);
 	}
 
-
-
-
-
-	@Override
+	/**
+	 * 
+	 * @param page
+	 */
 	public void drawShape(Graphics page) {
-		// TODO Auto-generated method stub
-		
+		page.fillRect(x, y, width, height);
 	}
 
 	@Override

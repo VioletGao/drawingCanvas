@@ -29,7 +29,9 @@ public class MoveCmd extends Command {
 	public void executeDrag(Point p, Drawing dwg) {
 		int x = p.x - lastPoint.x;
 		int y = p.y - lastPoint.y;
-		movedShape.move(x,y);
+		if (movedShape != null) {
+			movedShape.move(x,y);
+		}
 		lastPoint = p;
 	}
 }

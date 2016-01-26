@@ -22,7 +22,7 @@ public class Segment extends Shape {
   private int bottom;
   
   private double tolerance = 3; // tolerance for clicking the line
-
+  private int distance = 5;
   /**
    * Create a line, setting its color
    * @param c the color you wish the shape to initially have
@@ -59,7 +59,7 @@ public class Segment extends Shape {
   		top = y2; bottom = y2;
   	}
 	
-  	return almostContainsPoint(p, left, top, right, bottom, tolerance);
+  	return (almostContainsPoint(p, left, top, right, bottom, tolerance) && distanceToPoint(p, x1, y1, x2, y2) <= distance);
   }
 
 /**

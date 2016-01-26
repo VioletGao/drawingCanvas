@@ -10,8 +10,12 @@ import java.awt.*;
  * @see Shape
  */
 public class Ellipse extends Shape {
-	private int left;
-	private int top;
+	
+	private int x; // x coordinate where mouse first press
+	private int y; // y coordinate where mouse first press
+	
+	private int left; // x position of the top left corner
+	private int top; // y position of the top left corner
 	private int width;
 	private int height;
 	
@@ -25,37 +29,80 @@ public class Ellipse extends Shape {
 	}
 	
 	
-	@Override
+	/**
+	 * Draw the rectangle based on the position of first corner and size
+	 * 
+	 * @param page the page you wish to draw the shape on
+	 */
 	public void drawShape(Graphics page) {
-		page.drawOval(left, top, width, height);
+		page.fillOval(left, top, width, height);
 	}
 
 	/**
-	 * check if a Point is in the Ellipse
+	 * Check if a Point is in the Ellipse
 	 * @param p the given Point
 	 * @return true if the Ellipse contains the Point, 
 	 * or false if it does not contain the Point
 	 */
-	@Override
 	public boolean containsPoint(Point p) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
-	public void move(int deltaX, int deltaY) {
-		// TODO Auto-generated method stub
 		
+		return pointInEllipse(p, left, top, width, height);
 	}
 
 
-	@Override
+	/**
+	 * Move the ellipse
+	 * @param deltaX the change in x coordinates
+	 * @param deltaY the change in y coordinates
+	 */
+	public void move(int deltaX, int deltaY) {
+		left = left + deltaX;
+		top = top + deltaY;
+	}
+
+
+	/**
+	 * Get the center of the ellipse
+	 * @return the position of the center of the rectangle
+	 */
 	public Point getCenter() {
-		// TODO Auto-generated method stub
-		return null;
+		Point center = new Point();
+		int centerX = left + width / 2;
+		int centerY = top + height / 2;
+		center.setLocation(centerX, centerY);
+		
+		return center;
 	}
 
+	/**
+	 * Get the position where the rectangle starts to be drew
+	 * 
+	 * @param p the position of the start point
+	 */
+	public void getStartPoint(Point p) {
+		x = p.x;
+		y = p.y;
+		left = p.x;
+		top = p.y;
+	}
+	
+	/**
+	 * Get the new position of mouse during drawing,
+	 * update the form of the rectangle 
+	 * 
+	 * @param p the position of the end point
+	 */
+	public void updatePos(Point p) {
+		width = Math.abs(p.x - x);
+		height = Math.abs(p.y - y);
+		
+		if (p.x < x) {
+			left = p.x;
+		}
+		if (p.y < y) {
+			top = p.y;
+		}
+	}
 	
   // Helper method that returns whether Point p is in an Ellipse with the given
   // top left corner and size.

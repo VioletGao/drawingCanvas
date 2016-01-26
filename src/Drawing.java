@@ -27,7 +27,7 @@ public class Drawing {
 	 */
 	public void draw(Graphics page) {
 		for (Shape theShape: allShape) {
-			theShape.drawShape(page);
+			theShape.draw(page);
 		}
 	}
 	

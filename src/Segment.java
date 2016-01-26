@@ -10,11 +10,18 @@ import java.awt.*;
  * @see Shape
  */
 public class Segment extends Shape {
-  // YOU FILL IN INSTANCE VARIABLES AND METHODS.
+
   private int x1; // x position of the start point
   private int y1; // y position of the start point
   private int x2; // x position of the end point
   private int y2; // y position of the end point
+  
+  private int left; 
+  private int top;
+  private int right;
+  private int bottom;
+  
+  private double tolerance = 3; // tolerance for clicking the line
 
   /**
    * Create a line, setting its color
@@ -26,6 +33,7 @@ public class Segment extends Shape {
   
   /**
    * Draw the line
+   * 
    * @param page the page you wish to draw the shape on
    */
   public void drawShape(Graphics page) {
@@ -33,22 +41,50 @@ public class Segment extends Shape {
   	
   }
 
-  @Override
+/**
+ * Check if a point is located within the tolerance of the line
+ * 
+ * @param p the position given to be checked
+ */
   public boolean containsPoint(Point p) {
-  	// TODO Auto-generated method stub
-  	return false;
-  }
-
-  @Override
-  public void move(int deltaX, int deltaY) {
-  	// TODO Auto-generated method stub
+  	if (x1 < x2) {
+  		left = x1; right = x2;
+  	} else { 
+  		left = x2; right = x1;
+  	}
   	
+  	if (y1 < y2) {
+  		top = y1; bottom = y2;
+  	} else {
+  		top = y2; bottom = y2;
+  	}
+	
+  	return almostContainsPoint(p, left, top, right, bottom, tolerance);
   }
 
-  @Override
+/**
+ * 
+ * @param deltaX
+ * @param deltaY
+ */
+  public void move(int deltaX, int deltaY) {
+  	x1 = x1 + deltaX; y1 = y1 + deltaY;
+  	x2 = x2 + deltaX; y2 = y2 + deltaY;
+  }
+
+  /**
+   * Get the center of the line
+   * 
+   * @return the location of the center of the line
+   */
   public Point getCenter() {
-  	// TODO Auto-generated method stub
-  	return null;
+  	Point center = new Point();
+  	
+  	int centerX = (x1 + x2) / 2;
+  	int centerY = (y1 + y2) / 2;
+  	center.setLocation(centerX, centerY);
+  	
+  	return center;
   }
   
   /**

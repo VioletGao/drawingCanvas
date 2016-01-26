@@ -39,8 +39,14 @@ public class Drawing {
 	 * or null if no Shape contains the Point
 	 */
 	public Shape getFrontmostContainer(Point p) {
+		Shape frontShape = null;
 		
-		return null;
+		for (Shape aShape: allShape) {
+			if (aShape.containsPoint(p)) {
+				frontShape = aShape;
+			}
+		}
+		return frontShape;
 	}
 	
 	/**
@@ -48,7 +54,7 @@ public class Drawing {
 	 * @param newShape the added shape
 	 */
 	public void addShape(Shape newShape) {
-		allShape.add(0, newShape);
+		allShape.add(newShape);
 	}
 	
 	/**

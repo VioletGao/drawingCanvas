@@ -33,20 +33,29 @@ public class Rect extends Shape{
 
 	@Override
 	public boolean containsPoint(Point p) {
-		// TODO Auto-generated method stub
+	
 		return false;
 	}
 
-	@Override
+	/**
+	 * 
+	 */
 	public void move(int deltaX, int deltaY) {
-		// TODO Auto-generated method stub
-		
+		x = x + deltaX;
+		y = y + deltaY;
 	}
 
-	@Override
+	/**
+	 * Get the center of the rectangle
+	 * 
+	 * @return the position of the center of the rectangle
+	 */
 	public Point getCenter() {
-		// TODO Auto-generated method stub
-		return null;
+		Point center = new Point();
+		center.x = x + (width / 2);
+		center.y = y + (height / 2);
+		
+		return center;
 	}
 	
 	/**

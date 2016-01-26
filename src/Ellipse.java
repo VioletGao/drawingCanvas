@@ -27,8 +27,7 @@ public class Ellipse extends Shape {
 	
 	@Override
 	public void drawShape(Graphics page) {
-		// TODO Auto-generated method stub
-		
+		page.drawOval(left, top, width, height);
 	}
 
 	/**

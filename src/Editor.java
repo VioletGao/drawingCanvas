@@ -174,7 +174,7 @@ public class Editor extends JApplet {
    */
   private class DeleteButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
-      // YOU FILL THIS IN.
+      cmd = new DeleteCmd();
       repaint();
     }
   }
@@ -184,7 +184,7 @@ public class Editor extends JApplet {
    */
   private class FrontButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
-      // YOU FILL THIS IN.
+      cmd = new FrontCmd();
       repaint();
     }
   }
@@ -194,7 +194,7 @@ public class Editor extends JApplet {
    */
   private class BackButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
-      // YOU FILL THIS IN.
+      cmd = new BackCmd();
       repaint();
     }
   }
@@ -214,7 +214,8 @@ public class Editor extends JApplet {
    */
   private class RedButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
-      // YOU FILL THIS IN.
+      cmd = new ColorCmd();
+      colorBox.show(Color.red);
       repaint();
     }
   }
@@ -224,7 +225,8 @@ public class Editor extends JApplet {
    */
   private class GreenButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
-      // YOU FILL THIS IN.
+      cmd = new ColorCmd();
+      colorBox.show(Color.green);
       repaint();
     }
   }
@@ -234,7 +236,8 @@ public class Editor extends JApplet {
    */
   private class BlueButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
-      // YOU FILL THIS IN.
+      cmd = new ColorCmd();
+      colorBox.show(Color.blue);
       repaint();
     }
   }

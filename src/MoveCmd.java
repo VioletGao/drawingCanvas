@@ -12,6 +12,9 @@ public class MoveCmd extends Command {
 	private Shape movedShape; // the shape being removed
 	
 	/**
+	 * When the mouse is pressed, find the frontmost Shape in the drawing
+	 * that contains the mouse position. If there is such a Shape, then that
+	 * shape is moved with the position of the mouse.
 	 * 
 	 * @param p the coordinates of the press
      * @param dwg the drawing being pressed

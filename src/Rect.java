@@ -62,8 +62,8 @@ public class Rect extends Shape{
 	 */
 	public Point getCenter() {
 		Point center = new Point();
-		center.x = x + (width / 2);
-		center.y = y + (height / 2);
+		center.x = left + (width / 2);
+		center.y = top + (height / 2);
 		
 		return center;
 	}

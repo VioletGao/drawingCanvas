@@ -69,20 +69,20 @@ public class Drawing {
 	 * Move a shape to the front of the linear ordering of objects in the drawing
 	 * @param movedShape the shape being moved to the front
 	 */
-	public void moveFront(Shape movedShape) {
-		int oldIndex = allShape.indexOf(movedShape);
-		swap(oldIndex, oldIndex + 1);
+	public void moveFront(Shape aShape) {
+		Shape movedShape = aShape;
+		allShape.remove(aShape);
+		allShape.add(allShape.size() - 1, movedShape);
 	}
 	
 	/**
 	 * 
 	 * @param movedShape
 	 */
-	public void moveBack(Shape movedShape) {
-		int oldIndex = allShape.indexOf(movedShape);
-		if (oldIndex > 0) {
-			swap(oldIndex, oldIndex -1);
-		}
+	public void moveBack(Shape aShape) {
+		Shape movedShape = aShape;
+		allShape.remove(aShape);
+		allShape.add(0, movedShape);
 	}
 	
 	/**
@@ -92,12 +92,13 @@ public class Drawing {
 	public Color getColor() {
 		return defaultColor;
 	}
-
-
-	// helper method
-	private void swap(int index1, int index2) {
-		Shape moveShape = allShape.get(index1);
-		allShape.set(index1, allShape.get(index2));
-		allShape.set(index2, moveShape);
+	
+	/**
+	 * Set the default color of the drawing
+	 * @return new default color
+	 */
+	public void setColor(Color newColor) {
+		defaultColor = newColor;
 	}
+
 }

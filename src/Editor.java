@@ -216,6 +216,7 @@ public class Editor extends JApplet {
     public void actionPerformed(ActionEvent event) {
       cmd = new ColorCmd();
       colorBox.show(Color.red);
+      dwg.setColor(Color.red);
       repaint();
     }
   }
@@ -227,6 +228,7 @@ public class Editor extends JApplet {
     public void actionPerformed(ActionEvent event) {
       cmd = new ColorCmd();
       colorBox.show(Color.green);
+      dwg.setColor(Color.green);
       repaint();
     }
   }
@@ -238,6 +240,7 @@ public class Editor extends JApplet {
     public void actionPerformed(ActionEvent event) {
       cmd = new ColorCmd();
       colorBox.show(Color.blue);
+      dwg.setColor(Color.blue);
       repaint();
     }
   }

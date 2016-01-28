@@ -5,8 +5,8 @@ import java.awt.*;
  * Class for an ellipse.
  * 
  * Written by THC for CS 5 Lab Assignment 3.
- *
- * @author Thomas H. Cormen 
+ * Modified by YG for CSC260 Project1
+ * @author Thomas H. Cormen; Yuan (Violet) Gao
  * @see Shape
  */
 public class Ellipse extends Shape {
@@ -16,8 +16,8 @@ public class Ellipse extends Shape {
 	
 	private int left; // x position of the top left corner
 	private int top; // y position of the top left corner
-	private int width;
-	private int height;
+	private int width; // width of the ellipse
+	private int height; // height of the ellipse
 	
 	/**
 	 * Create an Ellipse, setting its color. 
@@ -30,7 +30,7 @@ public class Ellipse extends Shape {
 	
 	
 	/**
-	 * Draw the rectangle based on the position of first corner and size
+	 * Draw the ellipse based on the position of the top left corner and size
 	 * 
 	 * @param page the page you wish to draw the shape on
 	 */
@@ -40,9 +40,10 @@ public class Ellipse extends Shape {
 
 	/**
 	 * Check if a Point is in the Ellipse
+	 * 
 	 * @param p the given Point
 	 * @return true if the Ellipse contains the Point, 
-	 * or false if it does not contain the Point
+	 * false if it does not contain the Point
 	 */
 	public boolean containsPoint(Point p) {
 		
@@ -51,7 +52,8 @@ public class Ellipse extends Shape {
 
 
 	/**
-	 * Move the ellipse
+	 * Move the ellipse based on the change in coordinates
+	 * 
 	 * @param deltaX the change in x coordinates
 	 * @param deltaY the change in y coordinates
 	 */
@@ -63,7 +65,8 @@ public class Ellipse extends Shape {
 
 	/**
 	 * Get the center of the ellipse
-	 * @return the position of the center of the rectangle
+	 * 
+	 * @return the position of the center of the ellipse
 	 */
 	public Point getCenter() {
 		Point center = new Point();
@@ -75,7 +78,7 @@ public class Ellipse extends Shape {
 	}
 
 	/**
-	 * Get the position where the rectangle starts to be drew
+	 * Get the position where the ellipse starts to be drew
 	 * 
 	 * @param p the position of the start point
 	 */
@@ -87,8 +90,7 @@ public class Ellipse extends Shape {
 	}
 	
 	/**
-	 * Get the new position of mouse during drawing,
-	 * update the form of the rectangle 
+	 * Get the new position of mouse during drawing, update the form of the ellipse 
 	 * 
 	 * @param p the position of the end point
 	 */

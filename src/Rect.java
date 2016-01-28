@@ -3,19 +3,19 @@ import java.awt.*;
 /**
  * Rect.java
  * Class for a rectangle.
- *
- * @author Yuan Gao
+ * 
+ * Written by YG for CSC260 Project1.
+ * @author Yuan (Violet) Gao
  * @see Shape
  */
-public class Rect extends Shape{
-	
+public class Rect extends Shape{	
 	private int x; // x coordinate where mouse first press
 	private int y; // y coordinate where mouse first press
 	
 	private int left; // x position of the top left corner
 	private int top; // y position of the top left corner
-	private int width;
-	private int height;
+	private int width; // width of the rectangle
+	private int height; // height of the rectangle
 	
 	/**
 	 * Create a Rectangle, setting its color. 
@@ -27,7 +27,7 @@ public class Rect extends Shape{
 	}
 
 	/**
-	 * Draw the rectangle based on the position of first corner and size
+	 * Draw the rectangle based on the position of the top left corner and size
 	 * 
 	 * @param page the page you wish to draw the shape on
 	 */
@@ -36,7 +36,8 @@ public class Rect extends Shape{
 	}
 
 	/**
-	 * Check if a point is located within the tolerance of the line
+	 * Check if a point is located within the rectangle
+	 * 
 	 * @param p the position given to be checked
 	 */
 	public boolean containsPoint(Point p) {
@@ -45,7 +46,7 @@ public class Rect extends Shape{
 	}
 
 	/**
-	 * Move the rectangle 
+	 * Move the rectangle based on the change of the coordinates
 	 * 
 	 * @param deltaX the change in x coordinates
 	 * @param deltaY the change in y coordinates
@@ -81,8 +82,7 @@ public class Rect extends Shape{
 	}
 	
 	/**
-	 * Get the new position of mouse during drawing,
-	 * update the form of the rectangle 
+	 * Get the new position of mouse during drawing, update the form of the rectangle 
 	 * 
 	 * @param p the position of the end point
 	 */

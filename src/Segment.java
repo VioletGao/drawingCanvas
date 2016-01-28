@@ -5,8 +5,8 @@ import java.awt.*;
  * Class for a line segment.
  * 
  * Written by THC for CS 5 Lab Assignment 3.
- *
- * @author Thomas H. Cormen
+ * Modified by YG for CSC260 Project1.
+ * @author Thomas H. Cormen; Yuan Gao
  * @see Shape
  */
 public class Segment extends Shape {
@@ -22,9 +22,12 @@ public class Segment extends Shape {
   private int bottom;
   
   private double tolerance = 3; // tolerance for clicking the line
-  private int distance = 5;
+  private int distance = 5; // if the distance of the point is closer than this value,
+                            // the point is counted within the line
+  
   /**
    * Create a line, setting its color
+   * 
    * @param c the color you wish the shape to initially have
    */
   public Segment(Color c) {
@@ -63,9 +66,10 @@ public class Segment extends Shape {
   }
 
 /**
+ * Move the line according to the change of coordinates
  * 
- * @param deltaX
- * @param deltaY
+ * @param deltaX the change in x coordinates
+ * @param deltaY the change in y coordinates
  */
   public void move(int deltaX, int deltaY) {
   	x1 = x1 + deltaX; y1 = y1 + deltaY;
@@ -88,11 +92,11 @@ public class Segment extends Shape {
   }
   
   /**
-   * Get the position where the rectangle starts to be drew
+   * Set the position where the line starts to be drew
    * 
    * @param p the position of the start point
    */
-  public void getStartPoint(Point p) {
+  public void setStartPoint(Point p) {
 	 x1 = p.x;
 	 y1 = p.y;
 	 x2 = p.x;
@@ -100,8 +104,7 @@ public class Segment extends Shape {
   }
   
   /**
-   * Get the new position of mouse during drawing
-   * update the drawing of the line
+   * Get the new position of end point during drawing and update the line
    * 
    * @param p the position of the end point
    */

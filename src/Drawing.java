@@ -2,13 +2,14 @@ import java.awt.*;
 import java.util.ArrayList;
 /**
  * Drawing.java
- * Contains shapes in order.
+ * Handles a list of shapes.
  * 
- * @author Yuan Gao
+ * Written by YG for CSC260 Project1.
+ * @author Yuan (Violet) Gao
  */
 public class Drawing {
-	private Color defaultColor;
-	private ArrayList<Shape> allShape;
+	private Color defaultColor; // drawing's current color
+	private ArrayList<Shape> allShape; // all shapes currently exist on canvas
 	
 	/**
 	 * Create an empty drawing with an initial default color
@@ -35,8 +36,8 @@ public class Drawing {
 	 * Find the frontmost Shape in the drawing that contains a certain point
 	 * 
 	 * @param p a reference to a point
-	 * @return the frontmost shape that contains the Point, 
-	 * or null if no Shape contains the Point
+	 * @return the frontmost shape that contains the Point, or null if no 
+	 * Shape contains the Point
 	 */
 	public Shape getFrontmostContainer(Point p) {
 		Shape frontShape = null;
@@ -51,6 +52,7 @@ public class Drawing {
 	
 	/**
 	 * Add a new shape to the drawing
+	 * 
 	 * @param newShape the added shape
 	 */
 	public void addShape(Shape newShape) {
@@ -59,6 +61,7 @@ public class Drawing {
 	
 	/**
 	 * Remove a certain shape from the drawing
+	 * 
 	 * @param removedShape the shape being removed
 	 */
 	public void removeShape(Shape removedShape) {
@@ -67,6 +70,7 @@ public class Drawing {
 	
 	/**
 	 * Move a shape to the front of the linear ordering of objects in the drawing
+	 * 
 	 * @param movedShape the shape being moved to the front
 	 */
 	public void moveFront(Shape aShape) {
@@ -76,6 +80,7 @@ public class Drawing {
 	}
 	
 	/**
+	 * Move a shape to the back of the linear ordering of objects in the drawing
 	 * 
 	 * @param movedShape
 	 */

@@ -9,13 +9,14 @@ import java.awt.*;
  * @see Shape
  */
 public class Rect extends Shape{	
-	private int x; // x coordinate where mouse first press
-	private int y; // y coordinate where mouse first press
+	//private int x; // x coordinate where mouse first press
+	//private int y; // y coordinate where mouse first press
 	
 	private int left; // x position of the top left corner
 	private int top; // y position of the top left corner
 	private int width; // width of the rectangle
 	private int height; // height of the rectangle
+	private int tolerance = 10;
 	
 	/**
 	 * Create a Rectangle, setting its color. 
@@ -52,8 +53,8 @@ public class Rect extends Shape{
 	 * @param deltaY the change in y coordinates
 	 */
 	public void move(int deltaX, int deltaY) {
-		left = left + deltaX;
-		top = top + deltaY;
+		left += deltaX;
+		top += deltaY;
 	}
 
 	/**
@@ -70,10 +71,79 @@ public class Rect extends Shape{
 	}
 	
 	/**
+	 * Set the x value of the upper left corner of Rect
+	 * @param x new x value
+	 */
+	public void setX(int x) {
+		left = x;
+	}
+
+	/**
+	 * Set the y value of the upper left corner of Rect
+	 * @param y new y value
+	 */
+	public void setY(int y) {
+		top = y;
+	}
+
+	/**
+	 * @return x value of the upper left corner of Rect
+	 */
+	public int getX() {
+		return left;
+	}
+
+	/**
+	 * @return the y value of the upper left corner of Rect
+	 */
+	public int getY() {
+		return top;
+	}
+
+	/**
+	 * Set the width of the Rect to width
+	 * @param width the new width
+	 */
+	public void setWidth(int newWidth) {
+		width = newWidth;
+	}
+
+	/**
+	 * Set the height of the Rect to height
+	 * @param height the new height
+	 */
+	public void setHeight(int newheight) {
+		height = newheight;
+	}
+
+	
+	public void reshape(Point p) {
+		if (closetoTopLeft(p)) {
+			width += left - p.x;
+			height += top - p.y;
+			left = p.x;
+			top = p.y;
+		} else if (closetoTopRight(p)) {
+			width = p.x - left;
+			height += top - p.y;
+			top = p.y;
+		} else if (closetoBottomLeft(p)) {
+			width += left - p.x;
+			height = p.y - top;
+			left = p.x;
+		} else if (closetoBottomRight(p)) {
+			width = p.x - left;
+			height = p.y - top;
+		}
+		
+	}
+
+	
+/*	*//**
 	 * Get the position where the rectangle starts to be drew
 	 * 
 	 * @param p the position of the start point
-	 */
+	 *//*
 	public void getStartPoint(Point p) {
 		x = p.x;
 		y = p.y;
@@ -81,11 +151,11 @@ public class Rect extends Shape{
 		top = p.y;
 	}
 	
-	/**
+	*//**
 	 * Get the new position of mouse during drawing, update the form of the rectangle 
 	 * 
 	 * @param p the position of the end point
-	 */
+	 *//*
 	public void updatePos(Point p) {
 		width = Math.abs(p.x - x);
 		height = Math.abs(p.y - y);
@@ -96,7 +166,25 @@ public class Rect extends Shape{
 		if (p.y < y) {
 			top = p.y;
 		}
+	}*/
+
+	private boolean closetoTopLeft(Point p) {
+		return (p.x >= left - tolerance && p.x <= left + tolerance 
+				&& p.y >= top - tolerance && p.y <= top + tolerance);
 	}
-
-
+	
+	private boolean closetoTopRight(Point p) {
+		return (p.x >= left + width - tolerance && p.x <= left + width + tolerance
+				&& p.y >= top - tolerance && p.y <= top + tolerance);
+	}
+	
+	private boolean closetoBottomLeft(Point p) {
+		return (p.x >= left - tolerance && p.x <= left + tolerance 
+				&& p.y >= top + height - tolerance && p.y <= top + height + tolerance);
+	}
+	
+	private boolean closetoBottomRight(Point p) {
+		return (p.x >= left + width - tolerance && p.x <= left + width + tolerance
+				&& p.y >= top + height - tolerance && p.y <= top + height + tolerance);
+	}
 }

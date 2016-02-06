@@ -19,8 +19,11 @@ public class SegmentCmd extends Command{
 	 */
 	public void executePress(Point p, Drawing dwg) {
 		 newLine = new Segment(dwg.getColor());
-		 
-		 newLine.setStartPoint(p);
+		 newLine.setX1(p.x);
+		 newLine.setY1(p.y);
+		 newLine.setX2(p.x);
+		 newLine.setY2(p.y);
+		 //newLine.setStartPoint(p);
 		 dwg.addShape(newLine);
 	}
 
@@ -31,6 +34,8 @@ public class SegmentCmd extends Command{
 	 * @param dwg the drawing being dragged
 	 */
 	public void executeDrag(Point p, Drawing dwg) {
-		newLine.updatePos(p);
+		//newLine.updatePos(p);
+		newLine.setX2(p.x);
+		newLine.setY2(p.y);
 	}
 }

@@ -18,6 +18,7 @@ public class Ellipse extends Shape {
 	private int top; // y position of the top left corner
 	private int width; // width of the ellipse
 	private int height; // height of the ellipse
+	private int tolerance = 10;
 	
 	/**
 	 * Create an Ellipse, setting its color. 
@@ -106,6 +107,42 @@ public class Ellipse extends Shape {
 		}
 	}
 	
+
+	public void reshape(Point p) {
+		if (closetoTop(p)) {
+			height += top - p.y;
+			top = p.y;
+		} else if (closetoBottom(p)) {
+			height = p.y - top;
+		} else if (closetoLeft(p)) {
+			width += left - p.x;
+			left = p.x;
+		} else if (closetoRight(p)) {
+			width = p.x - left;
+		}
+		
+	}
+	
+	private boolean closetoTop(Point p) {
+		return (p.x >= left + width/2 - tolerance && p.x <= left + width/2 + tolerance
+				&& p.y >= top - tolerance && p.y <= top + tolerance);
+	}
+	
+	private boolean closetoBottom(Point p) {
+		return (p.x >= left + width/2 - tolerance && p.x <= left + width/2 + tolerance
+				&& p.y >= top + height - tolerance && p.y <= top + height + tolerance);
+	}
+	
+	private boolean closetoLeft(Point p) {
+		return (p.x >= left - tolerance && p.x <= left + tolerance
+				&& p.y >= top + height/2 - tolerance && p.y <= top + height/2 + tolerance);
+	}
+	
+	private boolean closetoRight(Point p) {
+		return (p.x >= left + width - tolerance && p.x <= left + width + tolerance
+				&& p.y >= top + height/2 - tolerance && p.y <= top + height/2 + tolerance);
+	}
+	
   // Helper method that returns whether Point p is in an Ellipse with the given
   // top left corner and size.
   private static boolean pointInEllipse(Point p, int left, int top, int width,
@@ -121,7 +158,5 @@ public class Ellipse extends Shape {
     // (See CRC, 29th edition, p. 178.)
     return Math.pow(x / a, 2) + Math.pow(y / b, 2) <= 1;
   }
-
-
 
 }

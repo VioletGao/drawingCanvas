@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Drawing {
 	private Color defaultColor; // drawing's current color
 	private ArrayList<Shape> allShape; // all shapes currently exist on canvas
+	private Shape recentShape; // the shape that changes most recently
 	
 	/**
 	 * Create an empty drawing with an initial default color
@@ -27,8 +28,9 @@ public class Drawing {
 	 * @param page the Graphics object to draw on
 	 */
 	public void draw(Graphics page) {
-		for (Shape theShape: allShape) {
-			theShape.draw(page);
+		
+		for (int i = allShape.size() - 1; i >= 0; i--) {
+			allShape.get(i).draw(page);
 		}
 	}
 	
@@ -41,12 +43,14 @@ public class Drawing {
 	 */
 	public Shape getFrontmostContainer(Point p) {
 		Shape frontShape = null;
-		
-		for (Shape aShape: allShape) {
-			if (aShape.containsPoint(p)) {
-				frontShape = aShape;
+		int i = 0;
+		while (frontShape == null && i < allShape.size()) {
+			if (allShape.get(i).containsPoint(p)) {
+				frontShape = allShape.get(i); 
 			}
+			i++;
 		}
+		
 		return frontShape;
 	}
 	
@@ -56,7 +60,20 @@ public class Drawing {
 	 * @param newShape the added shape
 	 */
 	public void addShape(Shape newShape) {
-		allShape.add(newShape);
+		allShape.add(0, newShape);
+		recentShape = allShape.get(0);
+	}
+	
+	/**
+	 * Add a copy of a specified shape to the drawing
+	 * The copy is immediately to the front of the original
+	 * 
+	 * @param copiedShape the shape to be copied
+	 */
+	public void addCopy(Shape copiedShape) {
+		int index = allShape.lastIndexOf(copiedShape);
+		allShape.add(index, copiedShape);
+		recentShape = allShape.get(index);
 	}
 	
 	/**
@@ -66,6 +83,7 @@ public class Drawing {
 	 */
 	public void removeShape(Shape removedShape) {
 		allShape.remove(removedShape);
+		recentShape = removedShape;
 	}
 	
 	/**
@@ -76,7 +94,8 @@ public class Drawing {
 	public void moveFront(Shape aShape) {
 		Shape movedShape = aShape;
 		allShape.remove(aShape);
-		allShape.add(allShape.size() - 1, movedShape);
+		allShape.add(0, movedShape);
+		recentShape = aShape;
 	}
 	
 	/**
@@ -87,7 +106,8 @@ public class Drawing {
 	public void moveBack(Shape aShape) {
 		Shape movedShape = aShape;
 		allShape.remove(aShape);
-		allShape.add(0, movedShape);
+		allShape.add(allShape.size(), movedShape);
+		recentShape = aShape;
 	}
 	
 	/**
@@ -106,4 +126,17 @@ public class Drawing {
 		defaultColor = newColor;
 	}
 
+	/**
+	 * Get the last modified shape
+	 * @return the shape that changed most recently
+	 */
+	public Shape getRecentShape() {
+		return recentShape;
+	}
+	
+	public void drawGrid(int spacing, int width, int height) {
+  	  for (int i = 0; i <= height; i += spacing) {
+		  
+  	  }
+	}
 }

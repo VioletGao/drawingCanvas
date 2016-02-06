@@ -10,6 +10,7 @@ import java.awt.Point;
  */
 public class RectCmd extends Command{	
 	private Rect newRect;
+	private Point pressedPoint;	// where the mouse was pressed
 	
 	/**
 	 * When the mouse is pressed, a new rectangle is added to the drawing
@@ -20,8 +21,12 @@ public class RectCmd extends Command{
 	 */
 	public void executePress(Point p, Drawing dwg) {
 		 newRect = new Rect(dwg.getColor());
-		 newRect.getStartPoint(p);
-		 dwg.addShape(newRect);
+		 pressedPoint = p;
+		 dwg.addShape(newRect);	
+		 newRect.setX(p.x);
+		 newRect.setY(p.y);
+		 newRect.setWidth(0);
+		 newRect.setHeight(0);
 	}
 
 	/**
@@ -31,7 +36,10 @@ public class RectCmd extends Command{
 	 * @param dwg the drawing being dragged
 	 */
 	public void executeDrag(Point p, Drawing dwg) {
-		newRect.updatePos(p);
+		 newRect.setX(Math.min(p.x, pressedPoint.x));
+		 newRect.setY(Math.min(p.y, pressedPoint.y));
+		 newRect.setWidth(Math.abs(p.x - pressedPoint.x));
+		 newRect.setHeight(Math.abs(p.y - pressedPoint.y));
 	}
 
 }

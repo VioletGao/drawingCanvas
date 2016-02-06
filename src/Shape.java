@@ -16,6 +16,7 @@ public abstract class Shape {
   public abstract boolean containsPoint(Point p); // does the Shape contain Point p?
   public abstract void move(int deltaX, int deltaY); // move the Shape
   public abstract Point getCenter(); // return the Shape's center
+  public abstract void reshape(Point p);
   
   /**
    * Create a Shape, setting its color. 

@@ -22,7 +22,7 @@ public class Segment extends Shape {
   private int bottom;
   
   private double tolerance = 3; // tolerance for clicking the line
-  private int distance = 5; // if the distance of the point is closer than this value,
+  private int distance = 4; // if the distance of the point is closer than this value,
                             // the point is counted within the line
   
   /**
@@ -56,6 +56,9 @@ public class Segment extends Shape {
   		left = x2; right = x1;
   	}
   	
+  	//left = Math.min(x1, x2);
+  	//right = Math.max(x1, x2);
+  	
   	if (y1 < y2) {
   		top = y1; bottom = y2;
   	} else {
@@ -72,8 +75,8 @@ public class Segment extends Shape {
  * @param deltaY the change in y coordinates
  */
   public void move(int deltaX, int deltaY) {
-  	x1 = x1 + deltaX; y1 = y1 + deltaY;
-  	x2 = x2 + deltaX; y2 = y2 + deltaY;
+  	x1 += deltaX; y1 += deltaY;
+  	x2 += deltaX; y2 += deltaY;
   }
 
   /**
@@ -90,12 +93,69 @@ public class Segment extends Shape {
   	
   	return center;
   }
+ 
+  public int getX1() {
+	  return x1;
+  }
   
-  /**
+  public int getX2() {
+	  return x2;
+  }
+  
+  public int getY1() {
+	  return y1;
+  }
+  
+  public int getY2() {
+	  return y2;
+  }
+  
+  public void setX1(int newX1) {
+	  x1 = newX1;
+  }
+  
+  public void setX2(int newX2) {
+	  x2 = newX2;
+  }
+  
+  public void setY1(int newY1) {
+	  y1 = newY1;
+  }
+  
+  public void setY2(int newY2) {
+	  y2 = newY2;
+  }
+  
+  public void reshape(Point p) {
+	  if (closetoEndpoint1(p)) {
+		  x1 = p.x;
+		  y1 = p.y;
+	  } else if (closetoEndpoint2(p)) {
+		  x2 = p.x;
+		  y2 = p.y;
+	  }
+  }
+  
+ /* public Point getEndPoint1() {
+	  Point endPoint1 = new Point();
+	  endPoint1.setLocation(x1, y1);
+	  return endPoint1;
+  }
+  
+  public Point getEndPoint2() {
+	  Point endPoint2 = new Point();
+	  endPoint2.setLocation(x2, y2);
+	  return endPoint2;
+  }
+  
+  public void setEndPoint2(Point p) {
+	  
+  }*/
+ /* *//**
    * Set the position where the line starts to be drew
    * 
    * @param p the position of the start point
-   */
+   *//*
   public void setStartPoint(Point p) {
 	 x1 = p.x;
 	 y1 = p.y;
@@ -103,14 +163,22 @@ public class Segment extends Shape {
 	 y2 = p.y;
   }
   
-  /**
+  *//**
    * Get the new position of end point during drawing and update the line
    * 
    * @param p the position of the end point
-   */
+   *//*
   public void updatePos(Point p) {
 	x2 = p.x;
 	y2 = p.y;
+  }*/
+  
+  private boolean closetoEndpoint1 (Point p) {
+	  return (p.x <= x1 + tolerance && p.x >= x1 - tolerance && p.y <= y1 + tolerance && p.y >= y1 - tolerance);
+  }
+
+  private boolean closetoEndpoint2 (Point p) {
+	  return (p.x <= x2 + tolerance && p.x >= x2 - tolerance && p.y <= y2 + tolerance && p.y >= y2 - tolerance);
   }
   
 // Helper method that returns true if Point p is within a tolerance of a
@@ -151,6 +219,5 @@ public class Segment extends Shape {
       return Math.sqrt(Math.pow(p.x - x, 2) + Math.pow(p.y - y, 2));
     }
   }
-
 
 }

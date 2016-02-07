@@ -9,7 +9,7 @@ import java.awt.Point;
  * @see Command
  */
 public class RectCmd extends Command{	
-	private Rect newRect;
+	private Rect s;
 	private Point pressedPoint;	// where the mouse was pressed
 	
 	/**
@@ -20,13 +20,13 @@ public class RectCmd extends Command{
 	 * @param dwg the drawing being pressed
 	 */
 	public void executePress(Point p, Drawing dwg) {
-		 newRect = new Rect(dwg.getColor());
+		 s = new Rect(dwg.getColor());
 		 pressedPoint = p;
-		 dwg.addShape(newRect);	
-		 newRect.setX(p.x);
-		 newRect.setY(p.y);
-		 newRect.setWidth(0);
-		 newRect.setHeight(0);
+		 dwg.addShape(s);	
+		 s.setX(p.x);
+		 s.setY(p.y);
+		 s.setWidth(0);
+		 s.setHeight(0);
 	}
 
 	/**
@@ -36,10 +36,13 @@ public class RectCmd extends Command{
 	 * @param dwg the drawing being dragged
 	 */
 	public void executeDrag(Point p, Drawing dwg) {
-		 newRect.setX(Math.min(p.x, pressedPoint.x));
-		 newRect.setY(Math.min(p.y, pressedPoint.y));
-		 newRect.setWidth(Math.abs(p.x - pressedPoint.x));
-		 newRect.setHeight(Math.abs(p.y - pressedPoint.y));
+		 s.setX(Math.min(p.x, pressedPoint.x));
+		 s.setY(Math.min(p.y, pressedPoint.y));
+		 s.setWidth(Math.abs(p.x - pressedPoint.x));
+		 s.setHeight(Math.abs(p.y - pressedPoint.y));
 	}
 
+	/*public void executeRease(EditHistory h, Drawing dwg) {
+		dwg.addEditAction(h);
+	}*/
 }

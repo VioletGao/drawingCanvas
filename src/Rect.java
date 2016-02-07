@@ -8,7 +8,7 @@ import java.awt.*;
  * @author Yuan (Violet) Gao
  * @see Shape
  */
-public class Rect extends Shape{	
+public class Rect extends Shape {	
 	//private int x; // x coordinate where mouse first press
 	//private int y; // y coordinate where mouse first press
 	
@@ -26,7 +26,7 @@ public class Rect extends Shape{
 	public Rect(Color c) {
 		super(c);
 	}
-
+	
 	/**
 	 * Draw the rectangle based on the position of the top left corner and size
 	 * 
@@ -116,6 +116,13 @@ public class Rect extends Shape{
 		height = newheight;
 	}
 
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
+	}
 	
 	public void reshape(Point p) {
 		if (closetoTopLeft(p)) {
@@ -138,6 +145,10 @@ public class Rect extends Shape{
 		
 	}
 
+/*	public Rect copy(Rect s) {
+		Rect newShape = new Rect(s.getColor());
+		return newShape;
+	}*/
 	
 /*	*//**
 	 * Get the position where the rectangle starts to be drew

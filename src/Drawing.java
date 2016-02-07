@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Drawing {
 	private Color defaultColor; // drawing's current color
 	private ArrayList<Shape> allShape; // all shapes currently exist on canvas
-	private Shape recentShape; // the shape that changes most recently
+	//private Shape recentShape; // the shape that changes most recently
 	
 	/**
 	 * Create an empty drawing with an initial default color
@@ -61,7 +61,7 @@ public class Drawing {
 	 */
 	public void addShape(Shape newShape) {
 		allShape.add(0, newShape);
-		recentShape = allShape.get(0);
+		//recentShape = allShape.get(0);
 	}
 	
 	/**
@@ -70,10 +70,10 @@ public class Drawing {
 	 * 
 	 * @param copiedShape the shape to be copied
 	 */
-	public void addCopy(Shape copiedShape) {
-		int index = allShape.lastIndexOf(copiedShape);
-		allShape.add(index, copiedShape);
-		recentShape = allShape.get(index);
+	public void addCopy(Shape newShape, Shape original) {
+		int index = allShape.indexOf(original);
+		allShape.add(index + 1, newShape);
+		//recentShape = allShape.get(index);
 	}
 	
 	/**
@@ -83,7 +83,7 @@ public class Drawing {
 	 */
 	public void removeShape(Shape removedShape) {
 		allShape.remove(removedShape);
-		recentShape = removedShape;
+		//recentShape = removedShape;
 	}
 	
 	/**
@@ -95,7 +95,7 @@ public class Drawing {
 		Shape movedShape = aShape;
 		allShape.remove(aShape);
 		allShape.add(0, movedShape);
-		recentShape = aShape;
+		//recentShape = aShape;
 	}
 	
 	/**
@@ -107,7 +107,7 @@ public class Drawing {
 		Shape movedShape = aShape;
 		allShape.remove(aShape);
 		allShape.add(allShape.size(), movedShape);
-		recentShape = aShape;
+		//recentShape = aShape;
 	}
 	
 	/**
@@ -126,17 +126,22 @@ public class Drawing {
 		defaultColor = newColor;
 	}
 
-	/**
-	 * Get the last modified shape
-	 * @return the shape that changed most recently
-	 */
-	public Shape getRecentShape() {
-		return recentShape;
+	//
+	public void addEditAction(EditHistory history) {
+		history.add(this);
 	}
 	
-	public void drawGrid(int spacing, int width, int height) {
+/*	*//**
+	 * Get the last modified shape
+	 * @return the shape that changed most recently
+	 *//*
+	public Shape getRecentShape() {
+		return recentShape;
+	}*/
+	
+/*	public void drawGrid(int spacing, int width, int height) {
   	  for (int i = 0; i <= height; i += spacing) {
 		  
   	  }
-	}
+	}*/
 }

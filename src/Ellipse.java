@@ -11,8 +11,8 @@ import java.awt.*;
  */
 public class Ellipse extends Shape {
 	
-	private int x; // x coordinate where mouse first press
-	private int y; // y coordinate where mouse first press
+	//private int x; // x coordinate where mouse first press
+	//private int y; // y coordinate where mouse first press
 	
 	private int left; // x position of the top left corner
 	private int top; // y position of the top left corner
@@ -79,10 +79,64 @@ public class Ellipse extends Shape {
 	}
 
 	/**
+	 * Set the x value of the upper left corner of Ellipse
+	 * @param x new x value
+	 */
+	public void setX(int x) {
+		left = x;
+	}
+
+	/**
+	 * Set the y value of the upper left corner of Ellipse
+	 * @param y new y value
+	 */
+	public void setY(int y) {
+		top = y;
+	}
+
+	/**
+	 * @return x value of the upper left corner of Ellipse
+	 */
+	public int getX() {
+		return left;
+	}
+
+	/**
+	 * @return the y value of the upper left corner of Ellipse
+	 */
+	public int getY() {
+		return top;
+	}
+
+	/**
+	 * Set the width of the Ellipse to width
+	 * @param width the new width
+	 */
+	public void setWidth(int newWidth) {
+		width = newWidth;
+	}
+
+	/**
+	 * Set the height of the Ellipse to height
+	 * @param height the new height
+	 */
+	public void setHeight(int newheight) {
+		height = newheight;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
+	}
+	
+/*	*//**
 	 * Get the position where the ellipse starts to be drew
 	 * 
 	 * @param p the position of the start point
-	 */
+	 *//*
 	public void getStartPoint(Point p) {
 		x = p.x;
 		y = p.y;
@@ -90,11 +144,11 @@ public class Ellipse extends Shape {
 		top = p.y;
 	}
 	
-	/**
+	*//**
 	 * Get the new position of mouse during drawing, update the form of the ellipse 
 	 * 
 	 * @param p the position of the end point
-	 */
+	 *//*
 	public void updatePos(Point p) {
 		width = Math.abs(p.x - x);
 		height = Math.abs(p.y - y);
@@ -105,7 +159,7 @@ public class Ellipse extends Shape {
 		if (p.y < y) {
 			top = p.y;
 		}
-	}
+	}*/
 	
 
 	public void reshape(Point p) {

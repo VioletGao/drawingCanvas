@@ -9,7 +9,8 @@ import java.awt.Point;
  * @see Command
  */
 public class EllipseCmd extends Command{
-	private Ellipse newEllipse;
+	private Ellipse s;
+	private Point pressedPoint;
 	
 	/**
 	 * When the mouse is pressed, a new Ellipse is added into the drawing
@@ -18,10 +19,13 @@ public class EllipseCmd extends Command{
 	 * @param dwg the drawing being pressed
 	 */
 	public void executePress(Point p, Drawing dwg) {
-		 newEllipse = new Ellipse(dwg.getColor());
-		 
-		 newEllipse.getStartPoint(p);
-		 dwg.addShape(newEllipse);
+		 s = new Ellipse(dwg.getColor());
+		 pressedPoint = p;
+		 dwg.addShape(s);	
+		 s.setX(p.x);
+		 s.setY(p.y);
+		 s.setWidth(0);
+		 s.setHeight(0);
 	}
 	
 	/**
@@ -31,6 +35,9 @@ public class EllipseCmd extends Command{
 	 * @param dwg the drawing being dragged
 	 */
 	public void executeDrag(Point p, Drawing dwg) {
-		newEllipse.updatePos(p);
+		 s.setX(Math.min(p.x, pressedPoint.x));
+		 s.setY(Math.min(p.y, pressedPoint.y));
+		 s.setWidth(Math.abs(p.x - pressedPoint.x));
+		 s.setHeight(Math.abs(p.y - pressedPoint.y));
 	}
 }

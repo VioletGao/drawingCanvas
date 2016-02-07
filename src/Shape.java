@@ -17,6 +17,7 @@ public abstract class Shape {
   public abstract void move(int deltaX, int deltaY); // move the Shape
   public abstract Point getCenter(); // return the Shape's center
   public abstract void reshape(Point p);
+  //public abstract Shape copy();
   
   /**
    * Create a Shape, setting its color. 
@@ -27,6 +28,10 @@ public abstract class Shape {
     color = c;
   }
 
+ /* public Shape(Shape another) {
+	  this.color = another.color;
+  }*/
+  
   /**
    * Set the Shape's color.
    * 
@@ -34,6 +39,10 @@ public abstract class Shape {
    */
   public void setColor(Color newColor) {
     color = newColor;
+  }
+  
+  public Color getColor() {
+	  return color;
   }
   
   /**
@@ -57,4 +66,5 @@ public abstract class Shape {
     Point oldCenter = getCenter();
     move(newCenter.x - oldCenter.x, newCenter.y - oldCenter.y);
   }
+  
 }

@@ -30,7 +30,8 @@ public class SegmentCmd extends UndoableCommand{
 	}
 
 	/**
-	 * When the mouse is dragged, the new position of mouse is recorded continuously
+	 * When the mouse is dragged, the shape of the Segment changes
+	 * according to the location of the mouse
 	 * 
 	 * @param p the coordinates of the place where mouse last locate
 	 * @param dwg the drawing being dragged

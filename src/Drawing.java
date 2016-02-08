@@ -104,12 +104,17 @@ public class Drawing {
 	}
 	
 	/**
-	 * 
+	 * Get the index of a certain shape
 	 */
 	public int getIndex(Shape s) {
 		return allShape.indexOf(s);
 	}
 	
+	/**
+	 * Move a shape to a certain index
+	 * @param i given index
+	 * @param s given shape
+	 */
 	public void moveToIndex(int i, Shape s) {
 		allShape.remove(s);
 		allShape.add(i, s);

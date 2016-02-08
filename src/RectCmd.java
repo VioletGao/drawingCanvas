@@ -9,9 +9,9 @@ import java.awt.Point;
  * @see Command
  */
 public class RectCmd extends UndoableCommand {	
-	private Rect s;
+	private Rect s; // new rectangle to be added in drawing
 	private Point pressedPoint;	// where the mouse was pressed
-	private Drawing previousdwg;
+	private Drawing thisdwg;
 	
 	/**
 	 * When the mouse is pressed, a new rectangle is added to the drawing
@@ -21,7 +21,7 @@ public class RectCmd extends UndoableCommand {
 	 * @param dwg the drawing being pressed
 	 */
 	public void executePress(Point p, Drawing dwg) {
-		 previousdwg = dwg;
+		 thisdwg = dwg;
 		 s = new Rect(dwg.getColor());
 		 pressedPoint = p;
 		 dwg.addShape(s);	
@@ -32,7 +32,8 @@ public class RectCmd extends UndoableCommand {
 	}
 
 	/**
-	 * When the mouse is dragged, the new position of the mouse is recorded continuously
+	 * When the mouse is dragged, the shape of the Rectangle changes
+	 * according to the location of the mouse
 	 * 
 	 * @param p the current position of the mouse
 	 * @param dwg the drawing being dragged
@@ -44,7 +45,10 @@ public class RectCmd extends UndoableCommand {
 		 s.setHeight(Math.abs(p.y - pressedPoint.y));
 	}
 
+	/**
+	 * Undo the add rectangle operation
+	 */
 	public void undo() {
-		previousdwg.removeShape(s);
+		thisdwg.removeShape(s);
 	}
 }

@@ -8,8 +8,9 @@ import java.awt.Point;
  * @author Yuan (Violet) Gao
  * @see Command
  */
-public class SegmentCmd extends Command{
+public class SegmentCmd extends UndoableCommand{
 	private Segment newLine;
+	private Drawing preDwg;
 	
 	/**
 	 * When the mouse is pressed, a new line is added into the drawing
@@ -18,12 +19,13 @@ public class SegmentCmd extends Command{
 	 * @param dwg the drawing being pressed
 	 */
 	public void executePress(Point p, Drawing dwg) {
+		 preDwg = dwg;
 		 newLine = new Segment(dwg.getColor());
 		 newLine.setX1(p.x);
 		 newLine.setY1(p.y);
 		 newLine.setX2(p.x);
 		 newLine.setY2(p.y);
-		 //newLine.setStartPoint(p);
+		 
 		 dwg.addShape(newLine);
 	}
 
@@ -34,8 +36,14 @@ public class SegmentCmd extends Command{
 	 * @param dwg the drawing being dragged
 	 */
 	public void executeDrag(Point p, Drawing dwg) {
-		//newLine.updatePos(p);
 		newLine.setX2(p.x);
 		newLine.setY2(p.y);
+	}
+	
+	/**
+	 * Undo the add segment operation
+	 */
+	public void undo() {
+		preDwg.removeShape(newLine);
 	}
 }

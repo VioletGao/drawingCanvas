@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class Drawing {
 	private Color defaultColor; // drawing's current color
 	private ArrayList<Shape> allShape; // all shapes currently exist on canvas
-	//private Shape recentShape; // the shape that changes most recently
 	
 	/**
 	 * Create an empty drawing with an initial default color
@@ -61,19 +60,18 @@ public class Drawing {
 	 */
 	public void addShape(Shape newShape) {
 		allShape.add(0, newShape);
-		//recentShape = allShape.get(0);
 	}
 	
 	/**
 	 * Add a copy of a specified shape to the drawing
-	 * The copy is immediately to the front of the original
+	 * The copy is put immediately after the original
 	 * 
-	 * @param copiedShape the shape to be copied
+	 * @param copy the copy of the original
+	 * @param original the original shape
 	 */
-	public void addCopy(Shape newShape, Shape original) {
+	public void addCopy(Shape copy, Shape original) {
 		int index = allShape.indexOf(original);
-		allShape.add(index + 1, newShape);
-		//recentShape = allShape.get(index);
+		allShape.add(index + 1, copy);
 	}
 	
 	/**
@@ -83,35 +81,43 @@ public class Drawing {
 	 */
 	public void removeShape(Shape removedShape) {
 		allShape.remove(removedShape);
-		//recentShape = removedShape;
 	}
 	
 	/**
 	 * Move a shape to the front of the linear ordering of objects in the drawing
 	 * 
-	 * @param movedShape the shape being moved to the front
+	 * @param aShape the shape being moved to the front
 	 */
-	public void moveFront(Shape aShape) {
-		Shape movedShape = aShape;
-		allShape.remove(aShape);
-		allShape.add(0, movedShape);
-		//recentShape = aShape;
+	public void moveFront(Shape s) {
+		allShape.remove(s);
+		allShape.add(0, s);
 	}
 	
 	/**
 	 * Move a shape to the back of the linear ordering of objects in the drawing
 	 * 
-	 * @param movedShape
+	 * @param aShape the shape being moved to the back
 	 */
-	public void moveBack(Shape aShape) {
-		Shape movedShape = aShape;
-		allShape.remove(aShape);
-		allShape.add(allShape.size(), movedShape);
-		//recentShape = aShape;
+	public void moveBack(Shape s) {
+		allShape.remove(s);
+		allShape.add(allShape.size(), s);
+	}
+	
+	/**
+	 * 
+	 */
+	public int getIndex(Shape s) {
+		return allShape.indexOf(s);
+	}
+	
+	public void moveToIndex(int i, Shape s) {
+		allShape.remove(s);
+		allShape.add(i, s);
 	}
 	
 	/**
 	 * Get the current default color of the drawing
+	 * 
 	 * @return current default color
 	 */
 	public Color getColor() {
@@ -120,28 +126,10 @@ public class Drawing {
 	
 	/**
 	 * Set the default color of the drawing
+	 * 
 	 * @return new default color
 	 */
 	public void setColor(Color newColor) {
 		defaultColor = newColor;
 	}
-
-	//
-	public void addEditAction(EditHistory history) {
-		history.add(this);
-	}
-	
-/*	*//**
-	 * Get the last modified shape
-	 * @return the shape that changed most recently
-	 *//*
-	public Shape getRecentShape() {
-		return recentShape;
-	}*/
-	
-/*	public void drawGrid(int spacing, int width, int height) {
-  	  for (int i = 0; i <= height; i += spacing) {
-		  
-  	  }
-	}*/
 }

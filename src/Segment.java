@@ -11,15 +11,15 @@ import java.awt.*;
  */
 public class Segment extends Shape {
 
-  private int x1; // x position of the start point
-  private int y1; // y position of the start point
-  private int x2; // x position of the end point
-  private int y2; // y position of the end point
+  private int x1; // x coordinate of the first endpoint
+  private int y1; // y coordinate of the first endpoint
+  private int x2; // x coordinate of the second endpoint
+  private int y2; // y coordinate of the second endpoint
   
-  private int left; 
-  private int top;
-  private int right;
-  private int bottom;
+  private int left; // most left coordinate of the segment
+  private int top; // most top coordinate of the segment
+  private int right; // most right coordinate of the segment
+  private int bottom; // most bottom coordinate of the segment
   
   private double tolerance = 3; // tolerance for clicking the line
   private int distance = 4; // if the distance of the point is closer than this value,
@@ -50,20 +50,12 @@ public class Segment extends Shape {
  * @param p the position given to be checked
  */
   public boolean containsPoint(Point p) {
-  	if (x1 < x2) {
-  		left = x1; right = x2;
-  	} else { 
-  		left = x2; right = x1;
-  	}
   	
-  	//left = Math.min(x1, x2);
-  	//right = Math.max(x1, x2);
-  	
-  	if (y1 < y2) {
-  		top = y1; bottom = y2;
-  	} else {
-  		top = y2; bottom = y2;
-  	}
+  	left = Math.min(x1, x2);
+  	right = Math.max(x1, x2);
+
+  	top = Math.min(y1, y2);
+  	bottom = Math.max(y1, y2);
 	
   	return (almostContainsPoint(p, left, top, right, bottom, tolerance) && distanceToPoint(p, x1, y1, x2, y2) <= distance);
   }
@@ -94,38 +86,83 @@ public class Segment extends Shape {
   	return center;
   }
  
+  /**
+   * Get the x coordinate of the first endpoint
+   * 
+   * @return x coordinate of the first endpoint
+   */
   public int getX1() {
 	  return x1;
   }
   
+  /**
+   * Get the x coordinate of the second endpoint
+   * 
+   * @return x coordinate of the second endpoint
+   */
   public int getX2() {
 	  return x2;
   }
   
+  /**
+   * Get the y coordinate of the first endpoint
+   * 
+   * @return y coordinate of the first endpoint
+   */
   public int getY1() {
 	  return y1;
   }
   
+  /**
+   * Get the y coordinate of the second endpoint
+   * 
+   * @return y coordinate of the second endpoint
+   */
   public int getY2() {
 	  return y2;
   }
   
+  /**
+   * Set the x coordinate of the first endpoint
+   * 
+   * @param newX1 new x coordinate
+   */
   public void setX1(int newX1) {
 	  x1 = newX1;
   }
   
+  /**
+   * Set the x coordinate of the second endpoint
+   * 
+   * @param newX2 new x coordinate
+   */
   public void setX2(int newX2) {
 	  x2 = newX2;
   }
   
+  /**
+   * Set the y coordinate of the first endpoint
+   * 
+   * @param newY1 new y coordinate
+   */
   public void setY1(int newY1) {
 	  y1 = newY1;
   }
   
+  /**
+   * Set the y coordinate of the second endpoint
+   * 
+   * @param newY2 new y coordinate
+   */
   public void setY2(int newY2) {
 	  y2 = newY2;
   }
   
+  /**
+   * Reshape the line if the mouse dragged near the endpoints
+   * 
+   * @param p location where the mouse pressed
+   */
   public void reshape(Point p) {
 	  if (closetoEndpoint1(p)) {
 		  x1 = p.x;
@@ -136,47 +173,12 @@ public class Segment extends Shape {
 	  }
   }
   
- /* public Point getEndPoint1() {
-	  Point endPoint1 = new Point();
-	  endPoint1.setLocation(x1, y1);
-	  return endPoint1;
-  }
-  
-  public Point getEndPoint2() {
-	  Point endPoint2 = new Point();
-	  endPoint2.setLocation(x2, y2);
-	  return endPoint2;
-  }
-  
-  public void setEndPoint2(Point p) {
-	  
-  }*/
- /* *//**
-   * Set the position where the line starts to be drew
-   * 
-   * @param p the position of the start point
-   *//*
-  public void setStartPoint(Point p) {
-	 x1 = p.x;
-	 y1 = p.y;
-	 x2 = p.x;
-	 y2 = p.y;
-  }
-  
-  *//**
-   * Get the new position of end point during drawing and update the line
-   * 
-   * @param p the position of the end point
-   *//*
-  public void updatePos(Point p) {
-	x2 = p.x;
-	y2 = p.y;
-  }*/
-  
+  // Helper methods that check if the mouse is pressed near the first endpoint
   private boolean closetoEndpoint1 (Point p) {
 	  return (p.x <= x1 + tolerance && p.x >= x1 - tolerance && p.y <= y1 + tolerance && p.y >= y1 - tolerance);
   }
 
+  // Helper methods that check if the mouse is pressed near the second endpoint
   private boolean closetoEndpoint2 (Point p) {
 	  return (p.x <= x2 + tolerance && p.x >= x2 - tolerance && p.y <= y2 + tolerance && p.y >= y2 - tolerance);
   }

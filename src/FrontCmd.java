@@ -8,8 +8,10 @@ import java.awt.Point;
  * @author Yuan (Violet) Gao
  * @see Command
  */
-public class FrontCmd extends Command {
-	private Shape movedShape; // the shape to be moved
+public class FrontCmd extends UndoableCommand {
+	private Shape s; // the shape to be moved
+	private Drawing thisDwg;
+	private int index; // index of the shape before it is moved
 	
 	/**
 	 * When the mouse is clicked, find the frontmost object that is 
@@ -17,10 +19,22 @@ public class FrontCmd extends Command {
 	 * the front of the linear ordering of objects in the drawing
 	 */
 	public void executeClick(Point p, Drawing dwg) {
-		movedShape = dwg.getFrontmostContainer(p);
+		thisDwg = dwg;
+		s = dwg.getFrontmostContainer(p);
+		index = dwg.getIndex(s);
 		
-		if (movedShape != null) {
-			dwg.moveFront(movedShape);
+		if (s != null) {
+			dwg.moveFront(s);
+		}
+	}
+	
+	/**
+	 * Undo the move front operation
+	 */
+	public void undo() {
+		if (s != null) {
+			thisDwg.moveToIndex(index, s);
 		}
 	}
 }
+ 

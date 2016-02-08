@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Point;
 
 /**
@@ -8,8 +9,9 @@ import java.awt.Point;
  * @author Yuan (Violet) Gao
  * @see Command
  */
-public class ColorCmd extends Command {
-	private Shape colorChangeShape; // the shape clicked to change its color
+public class ColorCmd extends UndoableCommand {
+	private Shape s; // the shape clicked to change its color
+	private Color c; // color of the shape before doing the operation
 	
 	/**
 	 * When the mouse is clicked, find the frontmost Shape in the drawing
@@ -20,11 +22,20 @@ public class ColorCmd extends Command {
      * @param dwg the drawing being clicked
 	 */
 	public void executeClick(Point p, Drawing dwg) { 
-		// Find the frontmost shape containing p
-		colorChangeShape = dwg.getFrontmostContainer(p);
-		
-		if (colorChangeShape != null) { // was there a Shape containing p?
-			colorChangeShape.setColor(dwg.getColor());
+		s = dwg.getFrontmostContainer(p);
+		c = s.getColor();
+
+		if (s != null) { 
+			s.setColor(dwg.getColor());
+		}
+	}
+	
+	/**
+	 * Undo the change of the color
+	 */
+	public void undo() {
+		if (s != null) {
+			s.setColor(c);
 		}
 	}
 }

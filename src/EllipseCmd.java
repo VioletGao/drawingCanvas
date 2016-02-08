@@ -8,9 +8,10 @@ import java.awt.Point;
  * @author Yuan (Violet) Gao
  * @see Command
  */
-public class EllipseCmd extends Command{
+public class EllipseCmd extends UndoableCommand{
 	private Ellipse s;
 	private Point pressedPoint;
+	private Drawing preDwg;
 	
 	/**
 	 * When the mouse is pressed, a new Ellipse is added into the drawing
@@ -19,6 +20,7 @@ public class EllipseCmd extends Command{
 	 * @param dwg the drawing being pressed
 	 */
 	public void executePress(Point p, Drawing dwg) {
+		 preDwg = dwg;
 		 s = new Ellipse(dwg.getColor());
 		 pressedPoint = p;
 		 dwg.addShape(s);	
@@ -39,5 +41,12 @@ public class EllipseCmd extends Command{
 		 s.setY(Math.min(p.y, pressedPoint.y));
 		 s.setWidth(Math.abs(p.x - pressedPoint.x));
 		 s.setHeight(Math.abs(p.y - pressedPoint.y));
+	}
+	
+	/**
+	 * Undo the add Ellipse operation
+	 */
+	public void undo() {
+		preDwg.removeShape(s);
 	}
 }

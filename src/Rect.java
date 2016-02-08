@@ -9,14 +9,12 @@ import java.awt.*;
  * @see Shape
  */
 public class Rect extends Shape {	
-	//private int x; // x coordinate where mouse first press
-	//private int y; // y coordinate where mouse first press
-	
+
 	private int left; // x position of the top left corner
 	private int top; // y position of the top left corner
 	private int width; // width of the rectangle
 	private int height; // height of the rectangle
-	private int tolerance = 10;
+	private int tolerance = 10; // tolerance when pressed near to a corner of the rect
 	
 	/**
 	 * Create a Rectangle, setting its color. 
@@ -71,30 +69,36 @@ public class Rect extends Shape {
 	}
 	
 	/**
-	 * Set the x value of the upper left corner of Rect
-	 * @param x new x value
+	 * Set the x coordinate of the upper left corner of Rect
+	 * 
+	 * @param x new x coordinate of upper left corner
 	 */
 	public void setX(int x) {
 		left = x;
 	}
 
 	/**
-	 * Set the y value of the upper left corner of Rect
-	 * @param y new y value
+	 * Set the y coordinate of the upper left corner of Rect
+	 * 
+	 * @param y new y coordinate of upper left corner
 	 */
 	public void setY(int y) {
 		top = y;
 	}
 
 	/**
-	 * @return x value of the upper left corner of Rect
+	 * Get the x coordinate of the upper left corner
+	 * 
+	 * @return x coordinate of the upper left corner of Rect
 	 */
 	public int getX() {
 		return left;
 	}
 
 	/**
-	 * @return the y value of the upper left corner of Rect
+	 * Get the y coordinate of the upper left corner
+	 * 
+	 * @return the y coordinate of the upper left corner of Rect
 	 */
 	public int getY() {
 		return top;
@@ -102,7 +106,8 @@ public class Rect extends Shape {
 
 	/**
 	 * Set the width of the Rect to width
-	 * @param width the new width
+	 * 
+	 * @param newWidth the new width
 	 */
 	public void setWidth(int newWidth) {
 		width = newWidth;
@@ -110,20 +115,36 @@ public class Rect extends Shape {
 
 	/**
 	 * Set the height of the Rect to height
-	 * @param height the new height
+	 * 
+	 * @param newHeight the new height
 	 */
-	public void setHeight(int newheight) {
-		height = newheight;
+	public void setHeight(int newHeight) {
+		height = newHeight;
 	}
 
+	/**
+	 * Get the width of the Rectangle
+	 * 
+	 * @return width of the Rectangle
+	 */
 	public int getWidth() {
 		return width;
 	}
 	
+	/**
+	 * Get the height of the Rectangle
+	 * 
+	 * @return height of the Rectangle
+	 */
 	public int getHeight() {
 		return height;
 	}
 	
+	/**
+	 * Change the shape of the Rectangle
+	 * 
+	 * @param p the pressed location of the mouse
+	 */
 	public void reshape(Point p) {
 		if (closetoTopLeft(p)) {
 			width += left - p.x;
@@ -145,55 +166,25 @@ public class Rect extends Shape {
 		
 	}
 
-/*	public Rect copy(Rect s) {
-		Rect newShape = new Rect(s.getColor());
-		return newShape;
-	}*/
-	
-/*	*//**
-	 * Get the position where the rectangle starts to be drew
-	 * 
-	 * @param p the position of the start point
-	 *//*
-	public void getStartPoint(Point p) {
-		x = p.x;
-		y = p.y;
-		left = p.x;
-		top = p.y;
-	}
-	
-	*//**
-	 * Get the new position of mouse during drawing, update the form of the rectangle 
-	 * 
-	 * @param p the position of the end point
-	 *//*
-	public void updatePos(Point p) {
-		width = Math.abs(p.x - x);
-		height = Math.abs(p.y - y);
-		
-		if (p.x < x) {
-			left = p.x;
-		}
-		if (p.y < y) {
-			top = p.y;
-		}
-	}*/
-
+	// Helper method that checks if the pressed location is close to the top left corner of the Rectangle
 	private boolean closetoTopLeft(Point p) {
 		return (p.x >= left - tolerance && p.x <= left + tolerance 
 				&& p.y >= top - tolerance && p.y <= top + tolerance);
 	}
 	
+	// Helper method that checks if the pressed location is close to the top right corner of the Rectangle
 	private boolean closetoTopRight(Point p) {
 		return (p.x >= left + width - tolerance && p.x <= left + width + tolerance
 				&& p.y >= top - tolerance && p.y <= top + tolerance);
 	}
 	
+	// Helper method that checks if the pressed location is close to the bottom left corner of the Rectangle
 	private boolean closetoBottomLeft(Point p) {
 		return (p.x >= left - tolerance && p.x <= left + tolerance 
 				&& p.y >= top + height - tolerance && p.y <= top + height + tolerance);
 	}
 	
+	// Helper method that checks if the pressed location is close to the bottom right corner of the Rectangle
 	private boolean closetoBottomRight(Point p) {
 		return (p.x >= left + width - tolerance && p.x <= left + width + tolerance
 				&& p.y >= top + height - tolerance && p.y <= top + height + tolerance);

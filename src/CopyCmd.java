@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.Point;
 
 /**
@@ -9,10 +8,10 @@ import java.awt.Point;
  * @author Yuan (Violet) Gao
  * @see Command
  */
-public class CopyCmd extends Command {
+public class CopyCmd extends UndoableCommand {
 	private Point lastPoint; // the point where the mouse last located
 	private Shape s; // the shape to be copied
-	//private Shape newShape; // the new shape
+	private Drawing thisDwg;
 	
 	/**
 	 * When the mouse is pressed, find the frontmost Shape in the drawing
@@ -23,30 +22,36 @@ public class CopyCmd extends Command {
      * @param dwg the drawing being pressed
 	 */
 	public void executePress(Point p, Drawing dwg) {
+		thisDwg = dwg;
 		s = dwg.getFrontmostContainer(p);
 		lastPoint = p;
-		if (s instanceof Rect) {
-			Rect newShape = new Rect(s.getColor());
-			newShape.setX(((Rect) s).getX());
-			newShape.setY(((Rect) s).getY());
-			newShape.setWidth(((Rect) s).getWidth());
-			newShape.setHeight(((Rect) s).getHeight());
-			dwg.addCopy(newShape,s);
-		} else if (s instanceof Ellipse) {
-			Ellipse newShape = new Ellipse(s.getColor());
-			newShape.setX(((Ellipse) s).getX());
-			newShape.setY(((Ellipse) s).getY());
-			newShape.setWidth(((Ellipse) s).getWidth());
-			newShape.setHeight(((Ellipse) s).getHeight());
-			dwg.addCopy(newShape,s);
-		} else if (s instanceof Segment) {
-			Segment newShape = new Segment(s.getColor());
-			newShape.setX1(((Segment) s).getX1());
-			newShape.setY1(((Segment) s).getY1());
-			newShape.setX2(((Segment) s).getX2());
-			newShape.setY2(((Segment) s).getY2());
-			dwg.addCopy(newShape,s);
+		if (s != null) {
+			if (s instanceof Rect) {
+				Rect newShape = new Rect(s.getColor());
+				newShape.setX(((Rect) s).getX());
+				newShape.setY(((Rect) s).getY());
+				newShape.setWidth(((Rect) s).getWidth());
+				newShape.setHeight(((Rect) s).getHeight());
+				dwg.addCopy(newShape,s);
+			} 
+			else if (s instanceof Ellipse) {
+				Ellipse newShape = new Ellipse(s.getColor());
+				newShape.setX(((Ellipse) s).getX());
+				newShape.setY(((Ellipse) s).getY());
+				newShape.setWidth(((Ellipse) s).getWidth());
+				newShape.setHeight(((Ellipse) s).getHeight());
+				dwg.addCopy(newShape,s);
+			} 
+			else if (s instanceof Segment) {
+				Segment newShape = new Segment(s.getColor());
+				newShape.setX1(((Segment) s).getX1());
+				newShape.setY1(((Segment) s).getY1());
+				newShape.setX2(((Segment) s).getX2());
+				newShape.setY2(((Segment) s).getY2());
+				dwg.addCopy(newShape,s);
+			}
 		}
+		
 	}
 	
 	/**
@@ -57,12 +62,23 @@ public class CopyCmd extends Command {
      * @param dwg the drawing being dragged
 	 */
 	public void executeDrag(Point p, Drawing dwg) {
-
 		int deltaX = p.x - lastPoint.x;
 		int deltaY = p.y - lastPoint.y;
 		
-		s.move(deltaX, deltaY);
+		if (s != null) {
+			s.move(deltaX, deltaY);	
+		}
 
 		lastPoint = p;
+	}
+	
+	/**
+	 * Undo the copy operation
+	 */
+	public void undo() {
+		if (s != null) {
+			thisDwg.removeShape(s);
+		}
+
 	}
 }

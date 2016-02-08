@@ -8,8 +8,12 @@ import java.awt.*;
  * @author Thomas H. Cormen
  * @see Command
  */
-public class ExchangeCmd extends Command {
+public class ExchangeCmd extends UndoableCommand {
   private Shape firstShape; // the first Shape clicked
+  private Shape s; // one of the manipulated shape
+  private Shape s1; // the other manipulated shape
+  private Point firstCenter;
+  private Point secondCenter;
   
   /**
    * When the mouse is clicked, find the frontmost Shape in the drawing
@@ -23,15 +27,17 @@ public class ExchangeCmd extends Command {
    */
   public void executeClick(Point p, Drawing dwg) {
     // Find the frontmost shape containing p.
-    Shape s = dwg.getFrontmostContainer(p);
+    s = dwg.getFrontmostContainer(p);
     
     if (s != null) { // was there a Shape containing p?
-      if (firstShape == null)
+      if (firstShape == null) {
         firstShape = s; // save this Shape for when there's another click
+        s1 = firstShape;
+      }
       else {
         // We have two Shapes to exchange. Get their centers.
-        Point firstCenter = firstShape.getCenter();
-        Point secondCenter = s.getCenter();
+        firstCenter = firstShape.getCenter();
+        secondCenter = s.getCenter();
 
         // Exchange their centers.
         firstShape.setCenter(secondCenter);
@@ -41,5 +47,13 @@ public class ExchangeCmd extends Command {
         firstShape = null;
       }
     }
+  }
+  
+  /**
+   * Undo the exchange operation
+   */
+  public void undo() {
+	  s1.setCenter(firstCenter);
+	  s.setCenter(secondCenter);
   }
 }

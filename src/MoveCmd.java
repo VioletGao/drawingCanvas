@@ -8,9 +8,10 @@ import java.awt.*;
  * @author Yuan (Violet) Gao
  * @see Command
  */
-public class MoveCmd extends Command {
-	private Point lastPoint; // the point where the mouse last located
-	private Shape movedShape; // the shape to be moved
+public class MoveCmd extends UndoableCommand {
+	private Point curPoint; // the point where the mouse current located
+	private Shape s; // the shape to be moved
+	private Point initalPoint; // the point where mouse first clicked
 	
 	/**
 	 * When the mouse is pressed, find the frontmost Shape in the drawing
@@ -21,8 +22,9 @@ public class MoveCmd extends Command {
      * @param dwg the drawing being pressed
 	 */
 	public void executePress(Point p, Drawing dwg) {
-		movedShape = dwg.getFrontmostContainer(p);
-		lastPoint = p;
+		s = dwg.getFrontmostContainer(p);
+		curPoint = p;
+		initalPoint = p;
 	}
 	
 	/**
@@ -32,13 +34,24 @@ public class MoveCmd extends Command {
      * @param dwg the drawing being dragged
 	 */
 	public void executeDrag(Point p, Drawing dwg) {
-		int x = p.x - lastPoint.x;
-		int y = p.y - lastPoint.y;
+		int x = p.x - curPoint.x;
+		int y = p.y - curPoint.y;
 		
-		if (movedShape != null) {
-			movedShape.move(x,y);
+		if (s != null) {
+			s.move(x,y);
 		}
 		
-		lastPoint = p;
+		curPoint = p;
+	}
+	
+	/**
+	 * Undo the last move operation
+	 */
+	public void undo() {
+		int x = initalPoint.x - curPoint.x;
+		int y = initalPoint.y - curPoint.y;
+		if (s != null) {
+			s.move(x, y);
+		}
 	}
 }

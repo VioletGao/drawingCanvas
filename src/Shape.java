@@ -16,8 +16,8 @@ public abstract class Shape {
   public abstract boolean containsPoint(Point p); // does the Shape contain Point p?
   public abstract void move(int deltaX, int deltaY); // move the Shape
   public abstract Point getCenter(); // return the Shape's center
-  public abstract void reshape(Point p);
-  //public abstract Shape copy();
+  public abstract void reshape(Point p); // change the shape of the existing Shape object
+
   
   /**
    * Create a Shape, setting its color. 
@@ -27,10 +27,6 @@ public abstract class Shape {
   public Shape(Color c) {
     color = c;
   }
-
- /* public Shape(Shape another) {
-	  this.color = another.color;
-  }*/
   
   /**
    * Set the Shape's color.

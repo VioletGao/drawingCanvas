@@ -26,6 +26,7 @@ public class Editor extends JApplet {
   private CanvasPanel canvasPanel;
   
   private EditHistory history;
+  private Grid aGrid; // grid on the background
   
   /**
    * Set up the buttons and canvas and register the listeners.
@@ -54,10 +55,11 @@ public class Editor extends JApplet {
     JButton magentaButton = new JButton("Magenta");
     JButton copyButton = new JButton("Copy");
     JButton reshapeButton = new JButton("Reshape");
-    JButton gridButton = new JButton("Grid");
-    JButton snapButton = new JButton("Snap");
+    JButton gridButton = new JButton("Show Grid");
+    JButton cleanGridButton = new JButton("Clean Grid");
+    //JButton snapButton = new JButton("Snap");
     JButton undoButton = new JButton("Undo");
-    JButton redoButton = new JButton("Redo");
+    //JButton redoButton = new JButton("Redo");
     JButton clearButton = new JButton("Clear");
     
     // Add listeners for all the command buttons.
@@ -77,9 +79,10 @@ public class Editor extends JApplet {
     copyButton.addActionListener(new CopyButtonListener());
     reshapeButton.addActionListener(new ReshapeButtonListener());
     gridButton.addActionListener(new GridButtonListener());
-    snapButton.addActionListener(new SnapButtonListener());
+    cleanGridButton.addActionListener(new CleanGridButtonListener());
+    //snapButton.addActionListener(new SnapButtonListener());
     undoButton.addActionListener(new UndoButtonListener());
-    redoButton.addActionListener(new RedoButtonListener());
+    //redoButton.addActionListener(new RedoButtonListener());
     clearButton.addActionListener(new ClearButtonListener());
 
     // The command buttons will be arranged in 3 rows.  Each row will
@@ -108,7 +111,7 @@ public class Editor extends JApplet {
     copyButton.setBackground(Color.yellow);
     reshapeButton.setBackground(Color.yellow);
     undoButton.setBackground(Color.yellow);
-    redoButton.setBackground(Color.yellow);
+    //redoButton.setBackground(Color.yellow);
     clearButton.setBackground(Color.yellow);
     editPanel.add(moveButton);
     editPanel.add(deleteButton);
@@ -118,7 +121,7 @@ public class Editor extends JApplet {
     editPanel.add(copyButton);
     editPanel.add(reshapeButton);
     editPanel.add(undoButton);
-    editPanel.add(redoButton);
+    //editPanel.add(redoButton);
     editPanel.add(clearButton);
 
     // The color panel is slightly different from the other two. In
@@ -146,18 +149,19 @@ public class Editor extends JApplet {
     // The grid pandel allows the user to toggle whether an evenly-
     // spaced grid is displayed
     JPanel gridPanel = new JPanel();
-    JLabel gridLabel = new JLabel("Gridding & Snapping:");
+    JLabel gridLabel = new JLabel("Gridding:");
     gridPanel.setLayout(new FlowLayout());
     gridPanel.add(gridLabel);
     gridButton.setBackground(Color.yellow);
-    snapButton.setBackground(Color.yellow);
+    cleanGridButton.setBackground(Color.yellow);
+    //snapButton.setBackground(Color.yellow);
     gridPanel.add(gridButton);
+    gridPanel.add(cleanGridButton);
     JLabel gridSpace = new JLabel("Spacing:");
     spacing = new TextField(3);
     gridPanel.add(gridSpace);
     gridPanel.add(spacing);
-    spacing.disable();
-    gridPanel.add(snapButton);
+    //gridPanel.add(snapButton);
     
     // Use a grid layout to stack the button panels vertically.  Also,
     // give them a cyan background.
@@ -182,9 +186,9 @@ public class Editor extends JApplet {
 
     setSize(APPLET_WIDTH, APPLET_HEIGHT);
     
-    //
+    // create a new edit history
     history = new EditHistory();
-    history.add(dwg);
+
   }
 
   /**
@@ -192,9 +196,8 @@ public class Editor extends JApplet {
    */
   private class RectButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
-      //history.clear();
       cmd = new RectCmd();
-     // history.add(dwg);
+      history.add(cmd);
       repaint();
     }
   }
@@ -205,7 +208,7 @@ public class Editor extends JApplet {
   private class EllipseButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
       cmd = new EllipseCmd();
-      //history.add(dwg);
+      history.add(cmd);
       repaint();
     }
   }
@@ -216,6 +219,7 @@ public class Editor extends JApplet {
   private class LineButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
       cmd = new SegmentCmd();
+      history.add(cmd);
       repaint();
     }
   }
@@ -226,6 +230,7 @@ public class Editor extends JApplet {
   private class MoveButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
       cmd = new MoveCmd();
+      history.add(cmd);
       repaint();
     }
   }
@@ -236,6 +241,7 @@ public class Editor extends JApplet {
   private class DeleteButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
       cmd = new DeleteCmd();
+      history.add(cmd);
       repaint();
     }
   }
@@ -246,6 +252,7 @@ public class Editor extends JApplet {
   private class FrontButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
       cmd = new FrontCmd();
+      history.add(cmd);
       repaint();
     }
   }
@@ -256,6 +263,7 @@ public class Editor extends JApplet {
   private class BackButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
       cmd = new BackCmd();
+      history.add(cmd);
       repaint();
     }
   }
@@ -266,6 +274,7 @@ public class Editor extends JApplet {
   private class ExchangeButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
       cmd = new ExchangeCmd();
+      history.add(cmd);
       repaint();
     }
   }
@@ -276,6 +285,7 @@ public class Editor extends JApplet {
   private class RedButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
       cmd = new ColorCmd();
+      history.add(cmd);
       colorBox.show(Color.red);
       dwg.setColor(Color.red);
       repaint();
@@ -288,6 +298,7 @@ public class Editor extends JApplet {
   private class GreenButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
       cmd = new ColorCmd();
+      history.add(cmd);
       colorBox.show(Color.green);
       dwg.setColor(Color.green);
       repaint();
@@ -300,6 +311,7 @@ public class Editor extends JApplet {
   private class BlueButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
       cmd = new ColorCmd();
+      history.add(cmd);
       colorBox.show(Color.blue);
       dwg.setColor(Color.blue);
       repaint();
@@ -312,6 +324,7 @@ public class Editor extends JApplet {
   private class YellowButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
       cmd = new ColorCmd();
+      history.add(cmd);
       colorBox.show(Color.yellow);
       dwg.setColor(Color.yellow);
       repaint();
@@ -324,6 +337,7 @@ public class Editor extends JApplet {
   private class MagentaButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
       cmd = new ColorCmd();
+      history.add(cmd);
       colorBox.show(Color.magenta);
       dwg.setColor(Color.magenta);
       repaint();
@@ -335,7 +349,8 @@ public class Editor extends JApplet {
    */
   private class CopyButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
-      cmd = new CopyCmd();	
+      cmd = new CopyCmd();
+      history.add(cmd);
       repaint();
     }
   }
@@ -346,6 +361,7 @@ public class Editor extends JApplet {
   private class ReshapeButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
       cmd = new ReshapeCmd();
+      history.add(cmd);
       repaint();
     }
   }
@@ -355,27 +371,26 @@ public class Editor extends JApplet {
    */
   private class GridButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
-    	spacing.enable();
-      /*String gridSpacing; 
+      String gridSpacing; 
       gridSpacing = spacing.getText();
-      int space = Integer.parseInt(gridSpacing);
-      if (space >= 0) {
-    	  canvasPanel.paint(getGraphics());;
-      }*/
+      if (!gridSpacing.isEmpty()) {
+          int space = Integer.parseInt(gridSpacing);
+          if (space >= 0) {
+        	  aGrid = new Grid(space);
+          }
+      }  
       repaint();
-    }
-    
-
+    }  
   }
-   
+  
   /**
-   * What to do when snapButton is pressed.
+   * What to do when cleanGridButton is pressed.
    */
-  private class SnapButtonListener implements ActionListener {
-    public void actionPerformed(ActionEvent event) {
- 
-      repaint();
-    }
+  private class CleanGridButtonListener implements ActionListener {
+	public void actionPerformed(ActionEvent event) {
+		aGrid = null;
+		repaint();
+	}  
   }
   
   /**
@@ -383,20 +398,21 @@ public class Editor extends JApplet {
    */
   private class UndoButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
-      dwg = history.undo();
+      cmd = new Command();
+      history.undo();
       repaint();
     }
   }
   
-  /**
+/*  *//**
    * What to do when redoButton is pressed.
-   */
+   *//*
   private class RedoButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
-      dwg = history.redo();
+     
       repaint();
     }
-  }
+  }*/
   
   /**
    * What to do when clearButton is pressed.
@@ -458,7 +474,9 @@ public class Editor extends JApplet {
     public void paintComponent(Graphics page) {
       super.paintComponent(page); // execute the paint method of JPanel
       dwg.draw(page); // have the drawing draw itself
-      page.drawLine(0, 50, APPLET_WIDTH, 50);
+      if (aGrid != null) {
+          aGrid.draw(canvasPanel.getWidth(), canvasPanel.getHeight(), page); // draw the grid
+      }
     }
     
     /**

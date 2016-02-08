@@ -8,20 +8,31 @@ import java.awt.Point;
  * @author Yuan (Violet) Gao
  * @see Command
  */
-public class ReshapeCmd extends Command {
+public class ReshapeCmd extends UndoableCommand {
 
-	Shape s;
+	Shape s; // the shape to be reshaped
 	
 	/**
-	 * When the mouse is pressed, identify if a 
+	 * When the mouse is pressed, find the frontmost Shape in the drawing
+     * that contains the mouse position.
+     * 
+     * @param p the coordinates of the click
+     * @param dwg the drawing being clicked
 	 */
 	public void executePress(Point p, Drawing dwg) {
 		s = dwg.getFrontmostContainer(p);
 	}
 	
+	/**
+	 * Reshape the shape got pressed
+	 * 
+	 * @param p the coordinates of the click
+     * @param dwg the drawing being clicked
+	 */
 	public void executeDrag(Point p, Drawing dwg) { 
 		if (s != null) {
 			s.reshape(p);
 		}
 	}
+	
 }

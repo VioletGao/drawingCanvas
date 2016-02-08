@@ -8,8 +8,10 @@ import java.awt.Point;
  * @author Yuan (Violet) Gao
  * @see Command
  */
-public class DeleteCmd extends Command{	
-	private Shape deletedShape; // the shape to be deleted
+public class DeleteCmd extends UndoableCommand{	
+	private Shape s; // the shape to be deleted
+	private Drawing thisDwg;
+	private int index; // index of the shape before it is deleted
 	
 	/**
 	 * When the mouse is clicked, find the frontmost Shape in the drawing
@@ -20,8 +22,18 @@ public class DeleteCmd extends Command{
 	 * @param dwg the drawing being clicked
 	 */
 	public void executeClick(Point p, Drawing dwg) { 
-		deletedShape = dwg.getFrontmostContainer(p);
-		
-		dwg.removeShape(deletedShape);
+		thisDwg = dwg;
+		s = dwg.getFrontmostContainer(p);
+		index = dwg.getIndex(s);
+		dwg.removeShape(s);
+	}
+	
+	/**
+	 * Undo the delete operation
+	 */
+	public void undo() {
+		if (s != null) {
+			thisDwg.moveToIndex(index, s);
+		}
 	}
 }

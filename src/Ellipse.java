@@ -10,15 +10,12 @@ import java.awt.*;
  * @see Shape
  */
 public class Ellipse extends Shape {
-	
-	//private int x; // x coordinate where mouse first press
-	//private int y; // y coordinate where mouse first press
-	
+
 	private int left; // x position of the top left corner
 	private int top; // y position of the top left corner
 	private int width; // width of the ellipse
 	private int height; // height of the ellipse
-	private int tolerance = 10;
+	private int tolerance = 10; // tolerance when click near to a corner
 	
 	/**
 	 * Create an Ellipse, setting its color. 
@@ -80,7 +77,7 @@ public class Ellipse extends Shape {
 
 	/**
 	 * Set the x value of the upper left corner of Ellipse
-	 * @param x new x value
+	 * @param x  new x coordinate of upper left corner
 	 */
 	public void setX(int x) {
 		left = x;
@@ -88,21 +85,21 @@ public class Ellipse extends Shape {
 
 	/**
 	 * Set the y value of the upper left corner of Ellipse
-	 * @param y new y value
+	 * @param y new y coordinate of upper left corner
 	 */
 	public void setY(int y) {
 		top = y;
 	}
 
 	/**
-	 * @return x value of the upper left corner of Ellipse
+	 * @return x coordinate of the upper left corner of Ellipse
 	 */
 	public int getX() {
 		return left;
 	}
 
 	/**
-	 * @return the y value of the upper left corner of Ellipse
+	 * @return the y coordinate of the upper left corner of Ellipse
 	 */
 	public int getY() {
 		return top;
@@ -110,7 +107,7 @@ public class Ellipse extends Shape {
 
 	/**
 	 * Set the width of the Ellipse to width
-	 * @param width the new width
+	 * @param newwidth the new width
 	 */
 	public void setWidth(int newWidth) {
 		width = newWidth;
@@ -118,50 +115,35 @@ public class Ellipse extends Shape {
 
 	/**
 	 * Set the height of the Ellipse to height
-	 * @param height the new height
+	 * @param newheight the new height
 	 */
 	public void setHeight(int newheight) {
 		height = newheight;
 	}
 
+	/**
+	 * Get the width of the Ellipse
+	 * 
+	 * @return width of the Ellipse
+	 */
 	public int getWidth() {
 		return width;
 	}
 	
+	/**
+	 * Get the height of the Ellipse
+	 * 
+	 * @return height of the Ellipse
+	 */
 	public int getHeight() {
 		return height;
 	}
 	
-/*	*//**
-	 * Get the position where the ellipse starts to be drew
+	/**
+	 * Change the shape of the Ellipse
 	 * 
-	 * @param p the position of the start point
-	 *//*
-	public void getStartPoint(Point p) {
-		x = p.x;
-		y = p.y;
-		left = p.x;
-		top = p.y;
-	}
-	
-	*//**
-	 * Get the new position of mouse during drawing, update the form of the ellipse 
-	 * 
-	 * @param p the position of the end point
-	 *//*
-	public void updatePos(Point p) {
-		width = Math.abs(p.x - x);
-		height = Math.abs(p.y - y);
-		
-		if (p.x < x) {
-			left = p.x;
-		}
-		if (p.y < y) {
-			top = p.y;
-		}
-	}*/
-	
-
+	 * @param p the pressed location of the mouse
+	 */
 	public void reshape(Point p) {
 		if (closetoTop(p)) {
 			height += top - p.y;
@@ -177,21 +159,25 @@ public class Ellipse extends Shape {
 		
 	}
 	
+	// Helper method that checks if the pressed location is close to the top corner of the Ellipse
 	private boolean closetoTop(Point p) {
 		return (p.x >= left + width/2 - tolerance && p.x <= left + width/2 + tolerance
 				&& p.y >= top - tolerance && p.y <= top + tolerance);
 	}
 	
+	// Helper method that checks if the pressed location is close to the bottom corner of the Ellipse
 	private boolean closetoBottom(Point p) {
 		return (p.x >= left + width/2 - tolerance && p.x <= left + width/2 + tolerance
 				&& p.y >= top + height - tolerance && p.y <= top + height + tolerance);
 	}
 	
+	// Helper method that checks if the pressed location is close to the left corner of the Ellipse
 	private boolean closetoLeft(Point p) {
 		return (p.x >= left - tolerance && p.x <= left + tolerance
 				&& p.y >= top + height/2 - tolerance && p.y <= top + height/2 + tolerance);
 	}
 	
+	// Helper method that checks if the pressed location is close to the right corner of the Ellipse
 	private boolean closetoRight(Point p) {
 		return (p.x >= left + width - tolerance && p.x <= left + width + tolerance
 				&& p.y >= top + height/2 - tolerance && p.y <= top + height/2 + tolerance);
